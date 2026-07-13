@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Neymar Jr. | O Craque</title>
+
+<!-- Fuentes: Bebas Neue para titulares tipo "dorsal de camiseta", Poppins para el cuerpo -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+  /* ============ TOKENS DE DISEÑO ============ */
+  :root{
+    --negro: #0a0a0a;
+    --negro-carta: #151513;
+    --verde: #009c3b;
+    --verde-oscuro: #045c26;
+    --amarillo: #ffcc00;
+    --dorado: #d4af37;
+    --hueso: #f2ede4;
+    --gris-texto: #b8b3a8;
+    --sombra: rgba(0,0,0,.5);
+    --transicion: .35s cubic-bezier(.4,0,.2,1);
+  }
+
+  *{ margin:0; padding:0; box-sizing:border-box; }
+
+  html{ scroll-behavior: smooth; }
+
+  body{
+    background: var(--negro);
+    color: var(--hueso);
+    font-family: 'Poppins', sans-serif;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, .dorsal{
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 2px;
+  }
+
+  a{ text-decoration:none; color:inherit; }
+
+  img{ max-width:100%; display:block; }
+
+  ::selection{ background: var(--amarillo); color: var(--negro); }
+
+  /* Marca de agua: el "10" gigante que es la firma visual de todo el sitio */
+  .marca-10{
+    position:absolute;
+    font-family:'Bebas Neue', sans-serif;
+    font-size: clamp(220px, 40vw, 520px);
+    color: transparent;
+    -webkit-text-stroke: 1.5px rgba(255,204,0,.12);
+    line-height:1;
+    pointer-events:none;
+    z-index:0;
+    user-select:none;
+  }
+
+  .contenedor{
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 24px;
+    position:relative;
+    z-index:1;
+  }
+
+  .etiqueta{
+    display:inline-block;
+    font-size:.75rem;
+    letter-spacing:4px;
+    text-transform:uppercase;
+    color: var(--amarillo);
+    font-weight:600;
+    margin-bottom: 14px;
+    border-left: 3px solid var(--verde);
+    padding-left: 10px;
+  }
+
+  /* ============ NAV ============ */
+  .nav{
+    position: fixed;
+    top:0; left:0; right:0;
+    z-index: 100;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding: 18px 28px;
+    background: linear-gradient(180deg, rgba(10,10,10,.9), transparent);
+    transition: background var(--transicion);
+  }
+  .nav.activo{ background: rgba(10,10,10,.92); backdrop-filter: blur(6px); border-bottom:1px solid rgba(212,175,55,.2); }
+
+  .nav .logo{
+    font-family:'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    letter-spacing:3px;
+    color: var(--hueso);
+  }
+  .nav .logo span{ color: var(--amarillo); }
+
+  .nav ul{
+    list-style:none;
+    display:flex;
+    gap: 28px;
+  }
+  .nav a{
+    font-size:.85rem;
+    font-weight:500;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    position:relative;
+    padding-bottom:4px;
+  }
+  .nav a::after{
+    content:'';
+    position:absolute; left:0; bottom:0;
+    width:0; height:2px;
+    background: var(--amarillo);
+    transition: width var(--transicion);
+  }
+  .nav a:hover::after{ width:100%; }
+
+  .nav-toggle{ display:none; flex-direction:column; gap:5px; cursor:pointer; background:none; border:none; }
+  .nav-toggle span{ width:26px; height:2px; background:var(--hueso); }
+
+  /* ============ HERO ============ */
+  .hero{
+    position:relative;
+    min-height:100vh;
+    display:flex;
+    align-items:flex-end;
+    background:
+      linear-gradient(180deg, rgba(10,10,10,.35) 0%, rgba(10,10,10,.55) 55%, var(--negro) 100%),
+      url('https://images.unsplash.com/photo-1522778119026-d647f0596c20?q=80&w=1740&auto=format&fit=crop') center/cover no-repeat;
+    /* alt real de la imagen a colocar: "Jugador de fútbol celebrando un gol con los brazos abiertos ante el público en un estadio nocturno" */
+  }
+
+  .hero-contenido{
+    position:relative;
+    z-index:2;
+    padding-bottom: 80px;
+    width:100%;
+  }
+
+  .hero-eyebrow{
+    color: var(--amarillo);
+    font-weight:600;
+    letter-spacing:5px;
+    text-transform:uppercase;
+    font-size:.8rem;
+    margin-bottom: 10px;
+  }
+
+  .hero h1{
+    font-size: clamp(4rem, 14vw, 11rem);
+    line-height: .9;
+    background: linear-gradient(180deg, var(--hueso) 40%, var(--dorado) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .hero-slogan{
+    max-width: 560px;
+    font-size: 1.15rem;
+    color: var(--gris-texto);
+    margin: 18px 0 32px;
+    border-left: 3px solid var(--verde);
+    padding-left: 16px;
+  }
+
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    padding: 15px 34px;
+    background: var(--verde);
+    color: var(--hueso);
+    font-weight:600;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    font-size:.85rem;
+    border-radius: 40px;
+    border: 2px solid var(--verde);
+    cursor:pointer;
+    transition: transform var(--transicion), background var(--transicion), box-shadow var(--transicion);
+  }
+  .btn:hover{
+    background: transparent;
+    border-color: var(--amarillo);
+    color: var(--amarillo);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px -10px rgba(255,204,0,.4);
+  }
+
+  .scroll-indicador{
+    position:absolute;
+    bottom: 28px; left:50%;
+    transform: translateX(-50%);
+    width: 26px; height: 42px;
+    border: 2px solid var(--dorado);
+    border-radius: 20px;
+    z-index:2;
+  }
+  .scroll-indicador::before{
+    content:'';
+    position:absolute;
+    top:6px; left:50%;
+    width:4px; height:8px;
+    background: var(--dorado);
+    border-radius: 2px;
+    transform: translateX(-50%);
+    animation: bajar 1.6s infinite;
+  }
+  @keyframes bajar{
+    0%{ opacity:1; top:6px; }
+    70%{ opacity:0; top:20px; }
+    100%{ opacity:0; top:6px; }
+  }
+
+  /* ============ SECCIONES GENERALES ============ */
+  section{
+    position:relative;
+    padding: 120px 0;
+    overflow:hidden;
+  }
+
+  .titulo-seccion{
+    font-size: clamp(2.6rem, 6vw, 4.2rem);
+    line-height:1;
+    margin-bottom: 50px;
+  }
+  .titulo-seccion .fuera{ -webkit-text-stroke: 1px var(--gris-texto); color:transparent; }
+
+  /* ============ TRAYECTORIA (Timeline) ============ */
+  .trayectoria{ background: linear-gradient(180deg, var(--negro), #0d0d0b); }
+  .marca-10.t1{ top: -60px; right: -60px; }
+
+  .linea-tiempo{
+    display:flex;
+    flex-direction:column;
+    gap: 0;
+    border-left: 2px solid rgba(212,175,55,.35);
+    margin-left: 10px;
+  }
+
+  .parada{
+    position:relative;
+    padding: 34px 0 34px 40px;
+    display:grid;
+    grid-template-columns: 90px 1fr;
+    gap: 24px;
+    align-items:center;
+    border-bottom: 1px solid rgba(255,255,255,.06);
+    transition: background var(--transicion), padding var(--transicion);
+  }
+  .parada:last-child{ border-bottom:none; }
+  .parada:hover{ background: rgba(255,204,0,.04); padding-left: 50px; }
+
+  .parada::before{
+    content:'';
+    position:absolute;
+    left:-9px; top:44px;
+    width:16px; height:16px;
+    border-radius:50%;
+    background: var(--negro);
+    border: 3px solid var(--verde);
+    transition: border-color var(--transicion), transform var(--transicion);
+  }
+  .parada:hover::before{ border-color: var(--amarillo); transform: scale(1.2); }
+
+  .parada .anio{
+    font-family:'Bebas Neue', sans-serif;
+    font-size: 2.2rem;
+    color: var(--dorado);
+  }
+
+  .parada .club h3{
+    font-size: 1.6rem;
+    letter-spacing:1px;
+  }
+  .parada .club p{
+    color: var(--gris-texto);
+    font-size:.92rem;
+    margin-top:4px;
+    max-width: 560px;
+  }
+
+  .escudo{
+    width: 46px; height:46px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--verde);
+    justify-self:end;
+  }
+  .parada-flex{ display:flex; align-items:center; gap:18px; justify-content:space-between; }
+
+  /* ============ PASIONES ============ */
+  .pasiones{ background: var(--negro); }
+  .bloques-pasion{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+  }
+
+  .tarjeta-pasion{
+    position:relative;
+    border-radius: 18px;
+    padding: 44px 36px;
+    min-height: 420px;
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-end;
+    overflow:hidden;
+    transition: transform var(--transicion);
+  }
+  .tarjeta-pasion:hover{ transform: translateY(-8px); }
+
+  .tarjeta-pasion img{
+    position:absolute;
+    inset:0;
+    width:100%; height:100%;
+    object-fit:cover;
+    z-index:0;
+    transition: transform 1.2s ease;
+  }
+  .tarjeta-pasion:hover img{ transform: scale(1.08); }
+
+  .tarjeta-pasion .capa{
+    position:absolute; inset:0; z-index:1;
+  }
+
+  .tarjeta-pasion .texto{ position:relative; z-index:2; }
+
+  .tarjeta-pasion.batman .capa{
+    background: linear-gradient(180deg, rgba(0,0,0,.2) 0%, rgba(0,0,0,.95) 90%);
+  }
+  .tarjeta-pasion.batman{
+    border: 1px solid rgba(212,175,55,.3);
+    box-shadow: 0 0 60px -20px rgba(0,0,0,.9) inset;
+  }
+  .tarjeta-pasion.batman h3{ color: var(--dorado); font-size: 2.4rem; }
+  .tarjeta-pasion.batman .icono-murcielago{
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    filter: drop-shadow(0 0 12px rgba(212,175,55,.5));
+  }
+
+  .tarjeta-pasion.gaming .capa{
+    background: linear-gradient(180deg, rgba(0,0,0,.1) 0%, rgba(4,26,12,.95) 90%);
+  }
+  .tarjeta-pasion.gaming{ border: 1px solid rgba(0,156,59,.4); }
+  .tarjeta-pasion.gaming h3{ color: var(--amarillo); font-size: 2.4rem; }
+
+  .tarjeta-pasion p{ color: var(--gris-texto); font-size:.95rem; max-width: 420px; }
+
+  .chips{
+    display:flex; gap:10px; flex-wrap:wrap; margin-top:16px;
+  }
+  .chip{
+    font-size:.72rem;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    padding: 6px 14px;
+    border-radius: 30px;
+    border: 1px solid var(--verde);
+    color: var(--hueso);
+  }
+  .tarjeta-pasion.batman .chip{ border-color: var(--dorado); }
+
+  /* ============ LOOKBOOK CORTES DE PELO ============ */
+  .lookbook{ background: linear-gradient(180deg, #0d0d0b, var(--negro)); }
+
+  .grid-look{
+    display:grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 22px;
+  }
+
+  .polaroid{
+    background: var(--negro-carta);
+    border-radius: 6px;
+    padding: 10px 10px 20px;
+    transform: rotate(var(--giro,0deg));
+    transition: transform var(--transicion), box-shadow var(--transicion);
+    box-shadow: 0 10px 25px -12px var(--sombra);
+    border: 1px solid rgba(255,255,255,.06);
+  }
+  .polaroid:nth-child(1){ --giro:-3deg; }
+  .polaroid:nth-child(2){ --giro:2deg; }
+  .polaroid:nth-child(3){ --giro:-2deg; }
+  .polaroid:nth-child(4){ --giro:3deg; }
+  .polaroid:nth-child(5){ --giro:2deg; }
+  .polaroid:nth-child(6){ --giro:-3deg; }
+  .polaroid:nth-child(7){ --giro:3deg; }
+  .polaroid:nth-child(8){ --giro:-2deg; }
+
+  .polaroid:hover{
+    transform: rotate(0deg) translateY(-10px) scale(1.04);
+    box-shadow: 0 24px 50px -14px rgba(255,204,0,.25);
+    z-index:5;
+  }
+
+  .polaroid .foto-wrap{
+    aspect-ratio: 1/1;
+    overflow:hidden;
+    border-radius:2px;
+  }
+  .polaroid img{ width:100%; height:100%; object-fit:cover; filter: grayscale(.15); }
+
+  .polaroid .pie{
+    text-align:center;
+    padding-top: 12px;
+    font-family:'Bebas Neue', sans-serif;
+    letter-spacing:1px;
+    font-size: 1.05rem;
+    color: var(--amarillo);
+  }
+
+  /* ============ GALERÍA DE ACCIÓN ============ */
+  .accion{ background: var(--negro); }
+
+  .grid-accion{
+    display:grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-auto-rows: 160px;
+    gap: 16px;
+  }
+  .foto-accion{
+    position:relative;
+    overflow:hidden;
+    border-radius: 12px;
+    grid-column: span 2;
+    grid-row: span 2;
+  }
+  .foto-accion.grande{ grid-column: span 4; grid-row: span 3; }
+  .foto-accion.chica{ grid-row: span 1; }
+
+  .foto-accion img{
+    width:100%; height:100%;
+    object-fit:cover;
+    transition: transform .6s ease, filter .6s ease;
+    filter: saturate(1.1) contrast(1.05);
+  }
+  .foto-accion:hover img{ transform: scale(1.12); filter: saturate(1.3) contrast(1.1); }
+
+  .foto-accion::after{
+    content: attr(data-etiqueta);
+    position:absolute;
+    left:0; right:0; bottom:0;
+    padding: 14px 16px;
+    font-size:.8rem;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    font-weight:600;
+    color: var(--hueso);
+    background: linear-gradient(0deg, rgba(0,0,0,.85), transparent);
+    transform: translateY(100%);
+    transition: transform var(--transicion);
+  }
+  .foto-accion:hover::after{ transform: translateY(0); }
+
+  /* ============ FOOTER ============ */
+  footer{
+    background: var(--negro-carta);
+    border-top: 1px solid rgba(212,175,55,.2);
+    padding: 50px 0 30px;
+    text-align:center;
+  }
+  footer .dorsal{
+    font-size: 3rem;
+    color: var(--dorado);
+    line-height:1;
+  }
+  footer p{ color: var(--gris-texto); font-size:.85rem; margin-top:10px; }
+  footer .redes{ display:flex; justify-content:center; gap:18px; margin: 18px 0; }
+  footer .redes a{
+    width:40px; height:40px;
+    border-radius:50%;
+    border:1px solid var(--verde);
+    display:flex; align-items:center; justify-content:center;
+    transition: var(--transicion);
+    font-size:1rem;
+  }
+  footer .redes a:hover{ background: var(--verde); }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 900px){
+    .grid-look{ grid-template-columns: repeat(2, 1fr); }
+    .grid-accion{ grid-template-columns: repeat(2, 1fr); grid-auto-rows: 140px; }
+    .foto-accion.grande{ grid-column: span 2; grid-row: span 2; }
+    .bloques-pasion{ grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 720px){
+    .nav ul{
+      position:fixed;
+      top:0; right:-100%;
+      height:100vh;
+      width: 68%;
+      background: var(--negro-carta);
+      flex-direction:column;
+      justify-content:center;
+      align-items:flex-start;
+      padding: 40px;
+      gap: 30px;
+      transition: right var(--transicion);
+      border-left: 1px solid rgba(212,175,55,.2);
+    }
+    .nav ul.abierto{ right:0; }
+    .nav-toggle{ display:flex; z-index:110; }
+
+    .parada{ grid-template-columns: 60px 1fr; }
+    .parada-flex{ flex-direction:column; align-items:flex-start; gap:8px; }
+    .escudo{ justify-self:start; }
+
+    section{ padding: 80px 0; }
+  }
+
+  @media (max-width: 520px){
+    .grid-look{ grid-template-columns: repeat(2, 1fr); gap:14px; }
+    .grid-accion{ grid-template-columns: 1fr; }
+    .foto-accion, .foto-accion.grande{ grid-column: span 1; grid-row: span 2; }
+    .hero-slogan{ font-size:1rem; }
+  }
+
+  /* Respeta preferencia de movimiento reducido */
+  @media (prefers-reduced-motion: reduce){
+    *{ animation:none !important; transition:none !important; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- ============ NAVEGACIÓN ============ -->
+  <nav class="nav" id="nav">
+    <a href="#inicio" class="logo">NEY<span>MAR</span></a>
+    <ul id="menu">
+      <li><a href="#inicio">Inicio</a></li>
+      <li><a href="#trayectoria">Trayectoria</a></li>
+      <li><a href="#pasiones">Pasiones</a></li>
+      <li><a href="#lookbook">Lookbook</a></li>
+      <li><a href="#accion">Jugadas</a></li>
+    </ul>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- ============ HERO ============ -->
+  <header class="hero" id="inicio">
+    <div class="hero-contenido contenedor">
+      <p class="hero-eyebrow">O Craque · #10 · Brasil</p>
+      <h1>NEYMAR<br>JR.</h1>
+      <p class="hero-slogan">Magia, ritmo y descaro brasileño. Del barrio de Mogi das Cruzes a los estadios más grandes del mundo — así se escribe una leyenda del fútbol.</p>
+      <a href="#trayectoria" class="btn">Ver su historia ↓</a>
+    </div>
+    <div class="scroll-indicador"></div>
+  </header>
+
+  <!-- ============ TRAYECTORIA ============ -->
+  <section class="trayectoria" id="trayectoria">
+    <span class="marca-10 t1">10</span>
+    <div class="contenedor">
+      <span class="etiqueta">Biografía</span>
+      <h2 class="titulo-seccion">La <span class="fuera">Trayectoria</span></h2>
+
+      <div class="linea-tiempo">
+
+        <div class="parada">
+          <span class="anio">2009</span>
+          <div class="parada-flex">
+            <div class="club">
+              <h3>Santos FC</h3>
+              <p>Debut profesional en el club que lo vio nacer futbolísticamente. Ganó el Campeonato Paulista y la Copa Libertadores, deslumbrando al mundo con su regate.</p>
+            </div>
+            <img class="escudo" src="https://images.unsplash.com/photo-1522778034537-20a2486be8c1?q=80&w=200&auto=format&fit=crop" alt="Escudo/emblema representativo del Santos FC de Brasil">
+          </div>
+        </div>
+
+        <div class="parada">
+          <span class="anio">2013</span>
+          <div class="parada-flex">
+            <div class="club">
+              <h3>FC Barcelona</h3>
+              <p>Se une al tridente MSN junto a Messi y Suárez. Una de las delanteras más letales de la historia, con triplete de Champions incluido en 2015.</p>
+            </div>
+            <img class="escudo" src="https://images.unsplash.com/photo-1522778119026-d647f0596c20?q=80&w=200&auto=format&fit=crop" alt="Escudo/emblema representativo del FC Barcelona">
+          </div>
+        </div>
+
+        <div class="parada">
+          <span class="anio">2017</span>
+          <div class="parada-flex">
+            <div class="club">
+              <h3>Paris Saint-Germain</h3>
+              <p>Fichaje histórico que rompió el mercado de fichajes mundial. Años de títulos domésticos y protagonismo absoluto en la Ligue 1.</p>
+            </div>
+            <img class="escudo" src="https://images.unsplash.com/photo-1508098682722-e99c43a406b2?q=80&w=200&auto=format&fit=crop" alt="Escudo/emblema representativo del Paris Saint-Germain">
+          </div>
+        </div>
+
+        <div class="parada">
+          <span class="anio">2023</span>
+          <div class="parada-flex">
+            <div class="club">
+              <h3>Al-Hilal</h3>
+              <p>Nueva etapa en la Liga Saudí, aportando su clase y experiencia a uno de los proyectos futbolísticos más ambiciosos de Oriente Medio.</p>
+            </div>
+            <img class="escudo" src="https://images.unsplash.com/photo-1517649763962-0c623066013b?q=80&w=200&auto=format&fit=crop" alt="Escudo/emblema representativo del Al-Hilal Saudi FC">
+          </div>
+        </div>
+
+        <div class="parada">
+          <span class="anio">2010–hoy</span>
+          <div class="parada-flex">
+            <div class="club">
+              <h3>Selección de Brasil</h3>
+              <p>Máximo goleador histórico de la Canarinha, líder indiscutido y estandarte del "Jogo Bonito" en Copas del Mundo y Copas América.</p>
+            </div>
+            <img class="escudo" src="https://images.unsplash.com/photo-1590756254933-2873d72c893e?q=80&w=200&auto=format&fit=crop" alt="Escudo/emblema representativo de la Selección de Fútbol de Brasil">
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PASIONES ============ -->
+  <section class="pasiones" id="pasiones">
+    <div class="contenedor">
+      <span class="etiqueta">Fuera de la cancha</span>
+      <h2 class="titulo-seccion">Pasiones y <span class="fuera">Estilo de Vida</span></h2>
+
+      <div class="bloques-pasion">
+
+        <article class="tarjeta-pasion batman">
+          <img src="https://images.unsplash.com/photo-1509347528160-9a9e33742cdb?q=80&w=1200&auto=format&fit=crop" alt="Silueta oscura urbana nocturna estilo Ciudad Gótica con rascacielos, ambiente de cómic de Batman">
+          <div class="capa"></div>
+          <div class="texto">
+            <div class="icono-murcielago">🦇</div>
+            <h3>El Caballero de la Noche</h3>
+            <p>Fanático declarado de Batman desde la infancia, colecciona figuras, tatuajes y hasta ha lucido máscaras del Hombre Murciélago en celebraciones. Para él, Gotham es un estado mental.</p>
+            <div class="chips">
+              <span class="chip">Tatuajes temáticos</span>
+              <span class="chip">Colección de cómics</span>
+              <span class="chip">Celebraciones icónicas</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="tarjeta-pasion gaming">
+          <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=1200&auto=format&fit=crop" alt="Setup gamer con monitores, luces neón verdes y teclado, ambiente de streaming y esports">
+          <div class="capa"></div>
+          <div class="texto">
+            <h3>Gaming &amp; Streaming</h3>
+            <p>Cuando no está en la cancha, está frente a la pantalla. Streams maratónicos de CS:GO, torneos de póker de alto nivel y una comunidad gamer que lo sigue tanto como sus goles.</p>
+            <div class="chips">
+              <span class="chip">CS:GO</span>
+              <span class="chip">Póker</span>
+              <span class="chip">Twitch</span>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ LOOKBOOK CORTES DE PELO ============ -->
+  <section class="lookbook" id="lookbook">
+    <div class="contenedor">
+      <span class="etiqueta">Ícono de estilo</span>
+      <h2 class="titulo-seccion">Lookbook de <span class="fuera">Cortes</span></h2>
+
+      <div class="grid-look">
+
+        <div class="polaroid">
+          <div class="foto-wrap">
+            <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=500&auto=format&fit=crop" alt="Corte de cabello rizado natural, estilo juvenil de inicios de carrera">
+          </div>
+          <p class="pie">2011 — Rizos naturales</p>
+        </div>
+
+        <div class="polaroid">
+          <div class="foto-wrap">
+            <img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?q=80&w=500&auto=format&fit=crop" alt="Corte mohawk crestado extravagante en tonos claros">
+          </div>
+          <p class="pie">2013 — Mohawk rubio</p>
+        </div>
+
+        <div class="polaroid">
+          <div class="foto-wrap">
+            <img src="https://images.unsplash.com/photo-1519699047748-de8e457a634e?q=80&w=500&auto=format&fit=crop" alt="Corte degradado con diseño de rayas afeitadas a los lados">
+          </div>
+          <p class="pie">2015 — Undercut con diseño</p>
+        </div>
+
+        <div class="polaroid">
+          <div class="foto-wrap">
+            <img src="https://images.unsplash.com/photo-1489980557514-251d61e3eeb6?q=80&w=500&auto=format&fit=crop" alt="Cabello teñido de rubio platino estilo llamativo">
+          </div>
+          <p class="pie">2017 — Rubio platino</p>
+        </div>
+
+        <div class="polaroid">
+          <div class="foto-wrap">
+            <img src="https://images.unsplash.com/photo-1492447166138-50c3889fccb1?q=80&w=500&auto=format&fit=crop" alt="Corte con trenzas cortas pegadas al cuero cabelludo, estilo urbano">
+          </div>
+          <p class="pie">2018 — Trenzas cortas</p>
+        </div>
+
+        <div class="polaroid">
+          <div class="foto-wrap">
+            <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=500&auto=format&fit=crop" alt="Corte moicano teñido de verde y amarillo con motivo patriótico brasileño">
+          </div>
+          <p class="pie">2019 — Verdeamarelo</p>
+        </div>
+
+        <div class="polaroid">
+          <div class="foto-wrap">
+            <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=500&auto=format&fit=crop&sat=-30" alt="Cabello corto natural con línea afeitada minimalista, look más maduro">
+          </div>
+          <p class="pie">2022 — Look clásico</p>
+        </div>
+
+        <div class="polaroid">
+          <div class="foto-wrap">
+            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=500&auto=format&fit=crop" alt="Corte moderno texturizado con diseño geométrico lateral, estilo actual">
+          </div>
+          <p class="pie">2024 — Textura moderna</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ GALERÍA DE ACCIÓN ============ -->
+  <section class="accion" id="accion">
+    <div class="contenedor">
+      <span class="etiqueta">En la cancha</span>
+      <h2 class="titulo-seccion">Galería de <span class="fuera">Acción</span></h2>
+
+      <div class="grid-accion">
+
+        <div class="foto-accion grande" data-etiqueta="Regate imparable en el área rival">
+          <img src="https://images.unsplash.com/photo-1579952363873-27f3bade9f55?q=80&w=1200&auto=format&fit=crop" alt="Jugador de fútbol regateando a un rival con el balón dominado en pleno partido">
+        </div>
+
+        <div class="foto-accion" data-etiqueta="Celebración de gol con el equipo">
+          <img src="https://images.unsplash.com/photo-1577223625816-7546f13df25d?q=80&w=800&auto=format&fit=crop" alt="Grupo de futbolistas celebrando un gol juntos en el campo">
+        </div>
+
+        <div class="foto-accion chica" data-etiqueta="Disputa aérea por el balón">
+          <img src="https://images.unsplash.com/photo-1518604666860-9ed391f76460?q=80&w=800&auto=format&fit=crop" alt="Jugadores disputando un balón en el aire durante un partido">
+        </div>
+
+        <div class="foto-accion chica" data-etiqueta="Estadio a reventar en noche de gala">
+          <img src="https://images.unsplash.com/photo-1522778119026-d647f0596c20?q=80&w=800&auto=format&fit=crop" alt="Estadio de fútbol lleno de aficionados durante un partido nocturno">
+        </div>
+
+        <div class="foto-accion" data-etiqueta="Tiro libre de precisión">
+          <img src="https://images.unsplash.com/photo-1516731415730-0c607149933a?q=80&w=800&auto=format&fit=crop" alt="Futbolista ejecutando un tiro libre con la barrera formada">
+        </div>
+
+        <div class="foto-accion" data-etiqueta="Festejo con la camiseta de Brasil"> 
+          <img src="https://images.unsplash.com/photo-1489944440615-453fc2b6a1a7?q=80&w=800&auto=format&fit=crop" alt="Jugador de la selección brasileña celebrando eufórico un gol">
+        </div>
+
+        <div class="foto-accion" data-etiqueta="Control de balón bajo presión">
+          <img src="https://images.unsplash.com/photo-1544298621-35a3b5f1b9b2?q=80&w=800&auto=format&fit=crop" alt="Jugador controlando el balón mientras es marcado por un defensor">
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer>
+    <div class="contenedor">
+      <div class="dorsal">10</div>
+      <div class="redes">
+        <a href="#" aria-label="Instagram">📷</a>
+        <a href="#" aria-label="Twitter/X">🐦</a>
+        <a href="#" aria-label="Twitch">🎮</a>
+      </div>
+      <p>Sitio tributo no oficial · Hecho con pasión por el fútbol brasileño</p>
+      <p>© 2026 — Diseño conceptual de fan page</p>
+    </div>
+  </footer>
+
+  <script>
+    // Menú móvil hamburguesa
+    const navToggle = document.getElementById('navToggle');
+    const menu = document.getElementById('menu');
+    navToggle.addEventListener('click', () => {
+      menu.classList.toggle('abierto');
+    });
+    menu.querySelectorAll('a').forEach(link=>{
+      link.addEventListener('click', ()=> menu.classList.remove('abierto'));
+    });
+
+    // Nav con fondo sólido al hacer scroll
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', ()=>{
+      nav.classList.toggle('activo', window.scrollY > 60);
+    });
+  </script>
+
+</body>
+</html>
